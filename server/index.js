@@ -14,7 +14,7 @@ const db = mysql.createConnection({
 });
 
 app.get('/resources', (req, res) => {
-  db.query('SELECT * FROM resources', (err, result) => {
+  db.query('SELECT * FROM resources ORDER BY company', (err, result) => {
     if (err) {
       console.log(err);
     } else {

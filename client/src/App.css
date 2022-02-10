@@ -1,6 +1,6 @@
 :root {
   --calm-blue: hsl(199, 81%, 31%);
-  --text-blue: hsl(199, 22%, 25%);
+  --text-blue: hsl(199, 80%, 18%);
   --white: hsl(0, 0%, 97%);
 }
 
@@ -59,32 +59,47 @@ li:hover {
 }
 
 .card {
-  font-size: 1em;
   display: flex;
   flex-direction: column;
-  width: 250px;
-  word-break: break-all;
+  width: 350px;
+  word-break: break-word;
   border: 1px solid var(--calm-blue);
-  padding: 0 4%;
+  padding: 0 2.5%;
+  /* padding: 0 6% 0 2%; */
+}
+
+.details {
+  text-align: center;
+  cursor: pointer;
+  color: blue;
+}
+
+.details:hover {
+  text-decoration: underline;
 }
 
 @media screen and (max-width: 620px) {
   .container {
-    margin-left: 31%;
+    margin-left: 30%;
   }
 }
 
-@media screen and (max-width: 450px) {
+@media screen and (max-width: 531px) {
   .container {
     width: 70%;
   }
   .card {
-    width: 92%;
+    width: 95%;
   }
 }
 
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 435px) {
   .nav {
-    word-break: break-all;
+    font-size: 0.8em;
+    word-break: break-word;
+  }
+
+  .card {
+    font-size: 0.8em;
   }
 }
