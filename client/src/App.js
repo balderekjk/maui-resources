@@ -8,7 +8,7 @@ function App() {
   const [currentList, setCurrentList] = useState([]);
   const [currentCompany, setCurrentCompany] = useState('');
   const [currentDetails, setCurrentDetails] = useState('');
-  const [toggleDetails, setToggleDetails] = useState(null);
+  const [toggleDetails, setToggleDetails] = useState('');
   const [toggleDisplayDetails, setToggleDisplayDetails] = useState(false);
   const [modal, setModal] = useState(false);
   let [helper, setHelper] = useState([]);
@@ -37,19 +37,30 @@ function App() {
   };
 
   const togglePanel = (id) => {
-    if (helper.length === 2) {
-      setHelper([...helper.slice(1), id]);
-    } else {
-      setHelper([...helper, id]);
+    console.log(toggleDetails);
+    console.log(id, 'id');
+    console.log(toggleDetails === id, 'conditional');
+    if (toggleDetails === id) {
+      setToggleDetails('');
+      console.log(toggleDetails);
+      return;
     }
-    if (toggleDisplayDetails === false) {
-      setToggleDetails(id);
-      setToggleDisplayDetails(!toggleDisplayDetails);
-    } else if (toggleDisplayDetails === true) {
-      setToggleDetails(!id);
-      setToggleDisplayDetails(!toggleDisplayDetails);
-    }
-    console.log(helper);
+    setToggleDetails(id);
+    // if (helper.length === 2) {
+    //   setHelper([...helper.slice(1), id]);
+    // } else {
+    //   setHelper([...helper, id]);
+    // }
+    // if (toggleDisplayDetails === false) {
+    //   setToggleDetails(id);
+    //   setToggleDisplayDetails(!toggleDisplayDetails);
+    // } else if (toggleDisplayDetails === true) {
+    //   setToggleDetails(!id);
+    //   setToggleDisplayDetails(!toggleDisplayDetails);
+    // }
+    // else if (helper[1] && helper[0] !== helper[1]) {
+
+    // }
   };
 
   const closeModal = () => {
