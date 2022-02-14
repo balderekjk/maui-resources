@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Modal from './components/Modal';
+import AccordionData from './components/AccordionData';
 import './App.css';
 
 function App() {
@@ -9,10 +10,9 @@ function App() {
   const [currentCompany, setCurrentCompany] = useState('');
   const [currentDetails, setCurrentDetails] = useState('');
   const [toggleDetails, setToggleDetails] = useState('');
-  const [toggleDisplayDetails, setToggleDisplayDetails] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState('Housing');
+  const [toggleOn, setToggleOn] = useState(false);
   const [modal, setModal] = useState(false);
-  let [helper, setHelper] = useState([]);
-  const [firstId, setFirstId] = useState(null);
 
   const getResources = () => {
     axios.get('http://localhost:3001/resources').then((response) => {
@@ -29,6 +29,7 @@ function App() {
   }, [fullList]);
 
   const filterResources = (category) => {
+    setCurrentCategory(category);
     setCurrentList(
       fullList.filter((val) => {
         return val.category === category;
@@ -37,30 +38,11 @@ function App() {
   };
 
   const togglePanel = (id) => {
-    console.log(toggleDetails);
-    console.log(id, 'id');
-    console.log(toggleDetails === id, 'conditional');
     if (toggleDetails === id) {
       setToggleDetails('');
-      console.log(toggleDetails);
       return;
     }
     setToggleDetails(id);
-    // if (helper.length === 2) {
-    //   setHelper([...helper.slice(1), id]);
-    // } else {
-    //   setHelper([...helper, id]);
-    // }
-    // if (toggleDisplayDetails === false) {
-    //   setToggleDetails(id);
-    //   setToggleDisplayDetails(!toggleDisplayDetails);
-    // } else if (toggleDisplayDetails === true) {
-    //   setToggleDetails(!id);
-    //   setToggleDisplayDetails(!toggleDisplayDetails);
-    // }
-    // else if (helper[1] && helper[0] !== helper[1]) {
-
-    // }
   };
 
   const closeModal = () => {
@@ -98,111 +80,84 @@ function App() {
             />
           )}
         </div>
-
+        <div
+          className="toggle-btn"
+          onClick={() => {
+            setToggleDetails('');
+            setToggleOn(!toggleOn);
+          }}
+        >
+          {toggleOn
+            ? `Hide All ${currentCategory}`
+            : `View All ${currentCategory}`}
+        </div>
         {currentList.map((val) => {
           return (
             <div className="card">
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  color: 'hsl(199, 80%, 18%)',
-                }}
-              >
-                <h3 style={{ marginLeft: '1.5rem', textAlign: 'center' }}>
-                  {val.company}
-                </h3>
+              <div className="card-wrapper">
                 <div
-                  onClick={() => {
-                    togglePanel(val.id);
-                  }}
                   style={{
-                    cursor: 'pointer',
-                    marginLeft: '1rem',
-                    fontSize: '0.8rem',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    color: 'hsl(199, 80%, 18%)',
                   }}
                 >
-                  &#9660;
-                </div>
-              </div>
-              {toggleDetails === val.id ? (
-                <div>
-                  {`${val.hours}` !== 'null' ? <p>Hours: {val.hours}</p> : ''}
-                  {`${val.primary_phone}` !== 'null' ? (
-                    <p>
-                      Main Phone:{' '}
-                      <a href={`tel:${val.primary_phone}`}>
-                        {val.primary_phone}
-                      </a>
-                    </p>
-                  ) : (
-                    ''
-                  )}
-                  {`${val.additional_phones}` !== 'null' ? (
-                    <p>Other Phones: {val.additional_phones}</p>
-                  ) : (
-                    ''
-                  )}
-                  {`${val.fax}` !== 'null' ? <p>Fax: {val.fax}</p> : ''}
-                  {`${val.address}` !== 'null' ? (
-                    <p>
-                      Address:{' '}
-                      <a
-                        href={`https://maps.google.com/?q=${val.address}`}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
-                        {val.address}
-                      </a>
-                    </p>
-                  ) : (
-                    ''
-                  )}
-                  {`${val.additional_addresses}` !== 'null' ? (
-                    <p>Other Addresses: {val.additional_addresses}</p>
-                  ) : (
-                    ''
-                  )}
-                  {`${val.email}` !== 'null' ? (
-                    <p>
-                      Email: <a href={`mailto:${val.email}`}>{val.email}</a>
-                    </p>
-                  ) : (
-                    ''
-                  )}
-                  {`${val.website}` !== 'null' ? (
-                    <p>
-                      Website:{' '}
-                      <a
-                        href={val.website}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                      >
-                        {val.website}
-                      </a>
-                    </p>
-                  ) : (
-                    ''
-                  )}
-                  {`${val.summary}` !== 'null' ? (
-                    <p
-                      className="details"
-                      onClick={() => {
-                        setCurrentCompany(`${val.company}`);
-                        setCurrentDetails(`${val.summary}`);
-                        setModal(true);
+                  <div
+                    className="panel-title"
+                    onClick={() => {
+                      togglePanel(val.id);
+                    }}
+                  >
+                    <h3
+                      className="panel-company"
+                      style={{ textAlign: 'center' }}
+                    >
+                      {val.company}
+                    </h3>
+                    <div
+                      style={{
+                        fontSize: '0.8rem',
+                        marginLeft: '1rem',
                       }}
                     >
-                      Click Here to View Summary
-                    </p>
-                  ) : (
-                    ''
-                  )}
+                      {toggleOn && toggleDetails === val.id
+                        ? String.fromCharCode(9660)
+                        : toggleOn || toggleDetails === val.id
+                        ? String.fromCharCode(9650)
+                        : String.fromCharCode(9660)}
+                    </div>
+                  </div>
                 </div>
-              ) : (
-                ''
-              )}
+                {toggleOn && toggleDetails === val.id ? (
+                  ''
+                ) : toggleOn ? (
+                  <AccordionData val={val} />
+                ) : !toggleOn && toggleDetails === val.id ? (
+                  <div>
+                    <AccordionData val={val} />
+                  </div>
+                ) : toggleOn && toggleDetails === '' ? (
+                  ''
+                ) : (
+                  ''
+                )}
+                {`${val.summary}` !== 'null' ? (
+                  <p
+                    className="details"
+                    onClick={() => {
+                      setCurrentCompany(`${val.company}`);
+                      setCurrentDetails(`${val.summary}`);
+                      setModal(true);
+                    }}
+                  >
+                    <div>Click Here to View Description</div>
+                  </p>
+                ) : (
+                  ''
+                )}
+              </div>
             </div>
           );
         })}
