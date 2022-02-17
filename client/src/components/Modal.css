@@ -46,19 +46,28 @@
   font-size: 1.2rem;
 }
 
+.title-close-btn {
+  display: -webkit-flex;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.title-close-btn button {
+  background-color: transparent;
+  border: none;
+  font-size: 25px;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 500px) {
   .body {
     font-size: 1rem;
   }
 }
 
-@media screen and (max-height: 350px) {
+@media screen and (max-height: 390px) {
   .modal-container {
-    height: 250px;
-  }
-
-  .body {
-    font-size: 1rem;
+    max-height: 85vh;
   }
 }
 
@@ -89,17 +98,4 @@
   .body {
     font-size: 0.8rem;
   }
-}
-
-.title-close-btn {
-  display: -webkit-flex;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.title-close-btn button {
-  background-color: transparent;
-  border: none;
-  font-size: 25px;
-  cursor: pointer;
 }

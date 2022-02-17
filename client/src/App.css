@@ -11,6 +11,10 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
+strong {
+  color: var(--text-blue);
+}
+
 .panel-company {
   color: var(--text-blue);
 }
@@ -46,13 +50,13 @@ body {
   margin: 10px 0;
 }
 
-li:hover {
+.nav > ul > li:hover {
   text-decoration: underline;
-  text-shadow: hsl(199, 81%, 50%) 0px 0px 4px;
+  /* text-shadow: hsl(199, 81%, 50%) 0px 0px 4px; */
 }
 
-strong {
-  color: var(--text-blue);
+.nav > ul > li:active {
+  color: hsl(0, 0%, 86%);
 }
 
 .container {
@@ -68,6 +72,8 @@ strong {
 }
 
 .toggle-btn {
+  font-weight: 700;
+  font-size: 1.1rem;
   background-color: hsla(0, 0%, 97%, 0.5);
   border: 1px solid var(--text-blue);
   border-radius: 5px;
